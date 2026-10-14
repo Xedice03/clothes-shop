@@ -1,4 +1,4 @@
-/* ===== Header ===== */
+
 .header {
   padding: 16px 0;
   background: #fff;
@@ -81,8 +81,6 @@
   font-size: 30px;
   color: #000;
 }
-
-/* ===== Mobil ===== */
 @media (max-width: 768px) {
   .header-wrap {
     flex-wrap: wrap;
