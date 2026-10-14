@@ -1,0 +1,123 @@
+/* ===== Header ===== */
+.header {
+  padding: 16px 0;
+  background: #fff;
+}
+
+.header-wrap {
+  display: flex;
+  align-items: center;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* bütün linklərdə alt xətt yoxdur */
+.header a {
+  text-decoration: none;
+}
+
+/* logo */
+.logo {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  color: #6c757d;
+}
+
+/* menyu: link siyahısı ortada, ikonlar sağda */
+.menu {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.menu-list {
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-list a {
+  margin: 0 20px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.menu-list a:hover {
+  color: #000;
+}
+
+/* ikonlar */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icons a {
+  color: #6c757d;
+}
+
+.icons a:hover {
+  color: #000;
+}
+
+.icons svg {
+  font-size: 20px;
+}
+
+/* hamburger: masaüstündə gizlidir */
+.menu-btn {
+  display: none;
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.menu-btn svg {
+  font-size: 30px;
+  color: #000;
+}
+
+/* ===== Mobil ===== */
+@media (max-width: 768px) {
+  .header-wrap {
+    flex-wrap: wrap;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  /* menyu əvvəl gizlidir, open olanda görünür */
+  .menu {
+    display: none;
+    flex: none;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 16px;
+  }
+
+  .menu.open {
+    display: flex;
+  }
+
+  .menu-list {
+    flex-direction: column;
+    margin: 0;
+    text-align: center;
+  }
+
+  .menu-list a {
+    display: block;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .icons {
+    margin-top: 12px;
+  }
+}

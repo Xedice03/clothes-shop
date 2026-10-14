@@ -1,0 +1,56 @@
+.insta {
+  padding: 70px 0 80px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.insta h2 {
+  margin-bottom: 14px;
+  font-family: "Volkhov", sans-serif;
+  font-size: 30px;
+  color: rgba(72, 72, 72, 1);
+}
+
+.insta-strip {
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.insta-strip img:nth-child(even) {
+  width: 15%;
+  height: 420px;
+  object-fit: cover;
+}
+
+.insta-strip img:nth-child(odd) {
+  width: 13.70%;
+  height: 250px;
+  object-fit: cover;
+}
+@media (max-width: 768px) {
+  .insta {
+    padding: 40px 0 50px 0;
+  }
+
+  .insta h2 {
+    padding: 0 16px;
+    font-size: 24px;
+  }
+
+  .insta p {
+    padding: 0 16px;
+  }
+
+  .insta-strip {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .insta-strip img:nth-child(odd),
+  .insta-strip img:nth-child(even) {
+    width: 33.33%;
+    height: 140px;
+  }
+}

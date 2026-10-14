@@ -1,0 +1,305 @@
+/*Ultimate Sale  */
+.sale-box {
+  width: 400px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sale-box img { display: block; object-fit: cover; }
+
+.sale-center {
+  height: 485px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sale-small-img1,
+.sale-small-img { object-fit: cover; border-radius: 6px; }
+
+.sale-small-img { width: 100%; margin-top: 30px; }
+
+.sale-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sale-title {
+  margin: 0;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #484848;
+}
+
+.sale-outline {
+  margin: 0;
+  font-size: 78px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #fff;
+  -webkit-text-stroke: 1px #888;
+}
+
+.sale-center p { font-size: 11px; letter-spacing: 1px; }
+
+.sale-subtitle { margin: 12px 0 20px; color: #484848; }
+
+.sale-button {
+  display: inline-block;
+  padding: 12px 35px;
+  border-radius: 5px;
+  background: #000;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.sale-button:hover { background: #333; }
+
+/* Brendlər  */
+.brands { width: 100%; padding: 25px 0; background: #fff; }
+
+.brands-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.brands-list span { display: inline-block; color: #484848; text-align: center; } /* yazı sığmayanda aşağı düşür */
+
+.brand-chanel,
+.brand-lv,
+.brand-prada { font-family: Georgia, serif; }
+
+.brand-ck,
+.brand-denim { font-family: Arial, sans-serif; }
+
+.brand-chanel { font-size: 23px; letter-spacing: 2px; }
+.brand-lv     { font-size: 16px; letter-spacing: 1px; }
+.brand-prada  { font-size: 23px; letter-spacing: 3px; }
+.brand-ck     { font-size: 19px; font-weight: 300; }
+.brand-denim  { font-size: 21px; letter-spacing: 2px; }
+
+/*New Arrivals  */
+.tab-btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 6px;
+  background: #f5f5f5;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tab-btn.active { background: #000; color: #fff; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); }
+
+.product-card {
+  padding: 12px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.product-img {
+  height: 180px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #f3f3f3;
+}
+
+.product-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.product-small { font-size: 10px; color: #888; }
+
+.product-price { font-size: 18px; }
+
+.stars svg { font-size: 12px; color: #f59e0b; }
+
+.sold-out { font-size: 10px; color: #e53935; }
+
+.view-more {
+  display: block;
+  margin: 40px auto 0;
+  padding: 12px 40px;
+  border: none;
+  border-radius: 6px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/*Müştəri rəyləri */
+.reviews {
+  padding: 70px 0 80px;
+  background: #fafafa;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.reviews h2 {
+  margin-bottom: 14px;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 30px;
+  color: #444;
+}
+
+.reviews-sub { font-size: 10px; color: #777; }
+
+/* kart*/
+.reviews-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 50px auto 0;
+}
+.review-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+.review-left,
+.review-right {
+  width: 34%;
+  height: 155px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.review-left { margin-right: -80px; padding-left: 26px; }
+.review-right { margin-left: -80px; padding-right: 26px; justify-content: flex-end; }
+
+.review-center {
+  width: 48%;
+  height: 206px;
+  padding: 0 34px;
+  z-index: 2;
+}
+.review-photo {
+  position: relative;
+  flex-shrink: 0;
+  width: 92px;
+  height: 92px;
+}
+.review-center .review-photo { width: 125px; height: 125px; }
+.review-photo::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 10px;
+  width: 100%;
+  height: 100%;
+  background: #d9d9d9;
+}
+.review-photo img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.review-text p { margin: 0 0 10px; font-size: 10.5px; line-height: 1.5; }
+.review-text span { font-size: 10px; }
+.review-text h4 { margin: 0 0 6px; font-family: "Source Serif 4", Georgia, serif; font-size: 19px; }
+.review-text hr { width: 180px; margin: 12px 0; }
+.review-stars { font-size: 11px; color: #f59e0b; }
+.review-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+.review-arrows button {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 11px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+.review-arrows button:hover { background: #111; color: #fff; }
+@media (max-width: 768px) {
+  /* Ultimate Sale */
+  .sale-wrap { width: 100%; max-width: 540px; padding: 0 16px; }
+
+  .sale-box,
+  .sale-center { width: 100%; height: auto; }
+
+  .sale-box img { width: 100%; height: auto; }
+
+  .sale-center { gap: 20px; }
+
+  .sale-small-img1,
+  .sale-small-img { width: 100%; max-height: 130px; }
+
+  .sale-small-img1 { max-height: 120px; }
+
+  .sale-small-img { margin-top: 0; }
+
+  .sale-title { font-size: 36px; }
+
+  .sale-outline { font-size: 58px; }
+
+  .sale-subtitle { margin: 10px 0 16px; }
+
+  .sale-button { padding: 11px 30px; font-size: 10px; }
+
+  /* Brendlər */
+  .brands-list { justify-content: center; gap: 14px 24px; }
+
+  .brand-chanel,
+  .brand-prada { font-size: 18px; }
+
+  .brand-lv { font-size: 13px; }
+
+  .brand-ck,
+  .brand-denim { font-size: 16px; }
+
+  /* New Arrivals */
+  .tab-btn { padding: 10px 16px; font-size: 11px; }
+
+  /* Rəylər */
+  .reviews { padding: 40px 0 50px; }
+
+  .reviews h2 { padding: 0 16px; font-size: 24px; }
+
+  .reviews p { padding: 0 16px; }
+
+  .reviews-slider { margin-top: 30px; }
+
+  /*  kart  */
+  .review-left,
+  .review-right { display: none; }
+
+  .review-center {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    gap: 24px;
+    padding: 30px 24px;
+    text-align: center;
+  }
+
+  .review-photo::before { left: -6px; }
+
+  .review-text hr { margin: 12px auto; }
+}

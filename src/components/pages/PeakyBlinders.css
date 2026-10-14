@@ -1,0 +1,148 @@
+.peaky-section {
+  /*  (PeakyBlinders.tsx) */
+  padding: 40px 0;
+
+  font-family: "Jost", system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111;
+}
+
+.peaky-section button {
+  font-family: inherit;
+}
+
+/* Peaky nöqtələri (şəkillər)*/
+.peaky-stage {
+  position: relative;
+}
+
+.peaky-model {
+  margin-left: 0px;
+}
+
+.point-img {
+  position: absolute;
+  /* width: 30%; */
+}
+
+/* sola baxan şəkil */
+.point-img-left {
+  transform: translateX(-100%);
+}
+/* sağ hissə: arxa fon şəkli */
+.peaky .peaky-right {
+  position: relative;
+  z-index: 2;
+  padding: 40px 40px 40px 7%;
+}
+
+.peaky-right small {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #777;
+}
+
+.peaky-right h1 {
+  margin: 0 0 20px 0;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 42px;
+  font-weight: 500;
+  color: #484848;
+}
+
+.peaky-right u {
+  font-size: 13px;
+  color: #000;
+}
+
+.peaky-right p {
+  width: 430px;
+  max-width: 100%;
+  margin: 16px 0 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #777;
+}
+
+.peaky-size {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #777;
+}
+
+.peaky-size span {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 16px;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+  font-size: 13px;
+}
+
+.peaky-price {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.peaky-price i {
+  font-size: 14px;
+  font-style: normal;
+}
+
+.peaky-btn {
+  padding: 14px 60px;
+  border: none;
+  border-radius: 6px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+/* üstünlüklər */
+.peaky-f b {
+  display: block;
+  font-size: 14px;
+}
+
+.peaky-f span {
+  display: block;
+  font-size: 12px;
+  color: #777;
+}
+
+/* ========== MOBİL (768px) ========== */
+@media (max-width: 768px) {
+  .peaky-stage {
+    width: 100%;
+  }
+  .peaky-model {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .point-img {
+    display: none;
+  }
+  .peaky .peaky-right {
+    padding: 28px 24px;
+  }
+  .peaky-right h1 {
+    font-size: 30px;
+  }
+  .peaky-right p {
+    width: 100%;
+    max-width: 100%;
+  }
+  .peaky-btn {
+    padding: 12px 40px;
+  }
+  .peaky-features {
+    padding: 30px 24px;
+  }
+}

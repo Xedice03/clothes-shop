@@ -1,0 +1,64 @@
+/* ========== DEALS OF THE MONTH ========== */
+.time-box {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+}
+
+.arrow-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+
+.deal-item {
+  position: relative;
+}
+
+.deal-label {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 12px 16px;
+  background:rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 768px) {
+  .deals {
+    text-align: center;
+  }
+
+  .deals .d-flex {
+    justify-content: center;
+  }
+
+  /* mobildə yalnız böyük slayd */
+  .deal-small {
+    display: none;
+  }
+
+  .deal-big {
+    width: 100%;
+  }
+
+  .deal-big img {
+    width: 100%;
+    height: auto;
+  }
+
+  .deal-label {
+    text-align: left;
+  }
+}
