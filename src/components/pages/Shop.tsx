@@ -13,7 +13,7 @@ type ApiProduct = {
   price: number;
   image: string;
   category: string;
-  rating: { rate: number; count: number };
+  rating:{ rate: number; count: number };
 };
 
 // API-dən gələn məhsula əlavə sahələr
@@ -23,7 +23,7 @@ type Product = ApiProduct & {
   brand: string;
   tag: string;
   oldPrice?: number;
-  soldOut: boolean;
+  soldOut:boolean;
 };
 
 const allSizes = ["S", "M", "L", "XL"];
@@ -310,7 +310,7 @@ function Shop() {
             ))}
           </div>
 
-          {/* Səhifələmə */}
+          {/*sehife*/}
           {totalPages > 1 && (
             <div className="shop-pages">
               {Array.from({ length: totalPages }, (_, i) => (
