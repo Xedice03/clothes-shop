@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BsSearch, BsPerson, BsBag, BsList } from "react-icons/bs";
+import { FaRegStar } from "react-icons/fa";
 import "./Header.css";
 
 function Header() {
@@ -41,6 +42,7 @@ function Header() {
           <div className="icons">
             <Link to="/search" onClick={close}><BsSearch /></Link>
             <Link to="/account" onClick={close}><BsPerson /></Link>
+            <Link to="/star" onClick={close}><FaRegStar /></Link>
             <Link to="/cart" onClick={close}><BsBag /></Link>
           </div>
         </div>
