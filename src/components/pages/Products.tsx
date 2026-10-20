@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./Products.css";
+import carts from "../../assets/trustbag.png.png";
+import { FiShare2 } from "react-icons/fi";
+import { BsQuestionSquare } from "react-icons/bs";
+import { FaCodeCompare } from "react-icons/fa6";
 
 type ProductData = {
   id: number;
@@ -13,7 +17,23 @@ type ProductData = {
   colors?: string[];
 };
 
-function Products() {
+type CartItem = {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+  size: string;
+  color: string;
+  qty: number;
+};
+
+const colorNames: Record<string, string> = {
+  "#6ecbff": "Blue",
+  "#ff6b6b": "Red",
+  "#9be564": "Green",
+};
+
+const Products = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +43,6 @@ function Products() {
   const [size, setSize] = useState("M");
   const [color, setColor] = useState("");
   const [count, setCount] = useState(1);
-  const [liked, setLiked] = useState(false);
   const [seconds, setSeconds] = useState(21587);
 
   // shopdan gelibse state-dən götürürük, yoxsa api-dən
@@ -32,20 +51,23 @@ function Products() {
       return;
     }
 
-    fetch("https://fakestoreapi.com/products/" + id)
-      .then((res) => res.json())
-      .then((data) => setFetchedProduct(data));
+    const getProduct = async () => {
+      try {
+        const res = await fetch("https://fakestoreapi.com/products/" + id);
+        const data = await res.json();
+        setFetchedProduct(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getProduct();
   }, [id, location.state]);
 
   // sayğac
   useEffect(() => {
     const timer = setInterval(() => {
-      setSeconds((s) => {
-        if (s > 0) {
-          return s - 1;
-        }
-        return 0;
-      });
+      setSeconds((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
     return () => clearInterval(timer);
@@ -55,85 +77,50 @@ function Products() {
     return <p>Loading...</p>;
   }
 
-  let sizes = ["S", "M", "L", "XL"];
-  if (product.sizes) {
-    sizes = product.sizes;
-  }
-
-  let colors = ["#6ecbff", "#ff6b6b", "#9be564"];
-  if (product.colors) {
-    colors = product.colors;
-  }
+  const sizes = product.sizes || ["S", "M", "L", "XL"];
+  const colors = product.colors || ["#6ecbff", "#ff6b6b", "#9be564"];
 
   // rəng seçilməyibsə birincini götürürük
-  let currentColor = color;
-  if (currentColor === "") {
-    currentColor = colors[0];
-  }
+  const currentColor = color || colors[0];
 
-  function getColorName(c: string) {
-    if (c === "#6ecbff") {
-      return "Blue";
-    }
-    if (c === "#ff6b6b") {
-      return "Red";
-    }
-    if (c === "#9be564") {
-      return "Green";
-    }
-    return c;
-  }
-
-  let rate = 4;
-  let reviews = 3;
-  if (product.rating) {
-    rate = Math.round(product.rating.rate);
-    reviews = product.rating.count;
-  }
+  // ulduz sayı apidən gəlir, yoxdursa 4 götürürük
+  const rate = product.rating ? Math.round(product.rating.rate) : 4;
+  const reviews = product.rating ? product.rating.count : 3;
 
   // apidə köhnə qiymət yoxdu
   const oldPrice = product.price * 1.5;
 
-  const days = Math.floor(seconds / 86400);
-  const hours = Math.floor((seconds % 86400) / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
+  const formatTime = (sec: number) => {
+    const days = Math.floor(sec / 86400);
+    const hours = Math.floor((sec % 86400) / 3600);
+    const minutes = Math.floor((sec % 3600) / 60);
+    const secs = sec % 60;
 
-  function pad(n: number) {
-    if (n < 10) {
-      return "0" + n;
-    }
-    return "" + n;
-  }
+    return [days, hours, minutes, secs]
+      .map((n) => String(n).padStart(2, "0"))
+      .join(" : ");
+  };
 
-  function minus() {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  }
-
-  function plus() {
-    setCount(count + 1);
-  }
-
-  function share() {
-    navigator.clipboard.writeText(window.location.href);
+  const share = () => {
+    const link = window.location.href;
+    navigator.clipboard.writeText(link);
     alert("Link copied");
-  }
+  };
 
-  function addToCart() {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const addToCart = () => {
+    const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
 
     // eyni mehsul varsa sayini artiririq
-    let found = false;
-    for (let i = 0; i < cart.length; i++) {
-      if (cart[i].id === product.id && cart[i].size === size && cart[i].color === currentColor) {
-        cart[i].qty = cart[i].qty + count;
-        found = true;
-      }
-    }
+    const existing = cart.find(
+      (item) =>
+        item.id === product.id &&
+        item.size === size &&
+        item.color === currentColor
+    );
 
-    if (found === false) {
+    if (existing) {
+      existing.qty += count;
+    } else {
       cart.push({
         id: product.id,
         title: product.title,
@@ -149,7 +136,7 @@ function Products() {
 
     // səbət ayrıca səhifədə açılır
     navigate("/cart");
-  }
+  };
 
   return (
     <section className="pd">
@@ -170,16 +157,11 @@ function Products() {
         <div className="pd-right">
           <p className="pd-brand">FASCO</p>
 
-          <div className="pd-title-row">
-            <h1>{product.title}</h1>
-            <button className="pd-wish" onClick={() => setLiked(!liked)}>
-              {liked ? "★" : "☆"}
-            </button>
-          </div>
-
           <p className="pd-rating">
-            {"★".repeat(rate)}
-            {"☆".repeat(5 - rate)} ({reviews})
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span key={star}>{star <= rate ? "★" : "☆"}</span>
+            ))}{" "}
+            ({reviews})
           </p>
 
           <div className="pd-price">
@@ -188,14 +170,12 @@ function Products() {
             <span className="pd-badge">SAVE 33%</span>
           </div>
 
-          <p className="pd-viewers">👁 24 people are viewing this right now</p>
+          <p className="pd-viewers">24 people are viewing this right now</p>
 
           {seconds > 0 && (
             <div className="pd-countdown">
               <span>Hurry up! Sale ends in:</span>
-              <span>
-                {pad(days)} : {pad(hours)} : {pad(minutes)} : {pad(secs)}
-              </span>
+              <span>{formatTime(seconds)}</span>
             </div>
           )}
 
@@ -217,7 +197,7 @@ function Products() {
             </button>
           ))}
 
-          <h3>Color: {getColorName(currentColor)}</h3>
+          <h3>Color: {colorNames[currentColor] || currentColor}</h3>
           {colors.map((c: string) => (
             <button
               key={c}
@@ -230,9 +210,9 @@ function Products() {
           <h3>Quantity</h3>
           <div className="pd-buy">
             <div className="pd-qty">
-              <button onClick={minus}>-</button>
+              <button onClick={() => count > 1 && setCount(count - 1)}>-</button>
               <span>{count}</span>
-              <button onClick={plus}>+</button>
+              <button onClick={() => setCount(count + 1)}>+</button>
             </div>
 
             <button className="pd-add" onClick={addToCart}>
@@ -241,31 +221,26 @@ function Products() {
           </div>
 
           <div className="pd-links">
-            <button>⇅ Compare</button>
-            <button>? Ask a question</button>
-            <button onClick={share}>⤴ Share</button>
+            <button><FaCodeCompare /> Compare</button>
+            <button><BsQuestionSquare /> Ask a question</button>
+            <button onClick={share}><FiShare2 /> Share</button>
           </div>
 
           <p className="pd-info">
-             <b>Estimated Delivery:</b> Jul 30 - Aug 03
+            <b>Estimated Delivery:</b> Jul 30 - Aug 03
           </p>
           <p className="pd-info">
-             <b>Free Shipping & Returns:</b> On all orders over $75
+            <b>Free Shipping & Returns:</b> On all orders over $75
           </p>
 
           <div className="pd-secure">
-            <div className="pd-cards">
-              <span>VISA</span>
-              <span>MC</span>
-              <span>AMEX</span>
-              <span>JCB</span>
-            </div>
+            <img className="pd-cards" src={carts} alt="cards" />
             <p>Guarantee safe & secure checkout</p>
           </div>
         </div>
       </div>
     </section>
   );
-}
+};
 
 export default Products;

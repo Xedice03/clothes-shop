@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ShopCart.css";
 
 type CartItem = {
@@ -6,103 +6,54 @@ type CartItem = {
   title: string;
   price: number;
   image: string;
+  size: string;
   color: string;
   qty: number;
 };
 
-const CART_KEY = "cart";
-const WRAP_PRICE = 10;
-
-const getCartFromStorage = (): CartItem[] => {
-  try {
-    const data = localStorage.getItem(CART_KEY);
-    return data ? JSON.parse(data) : [];
-  } catch (error) {
-    console.error("Cart could not be read:", error);
-    return [];
-  }
-};
-
-const formatPrice = (value: number): string => `$${value.toFixed(2)}`;
-
-type CartRowProps = {
-  item: CartItem;
-  onIncrease: () => void;
-  onDecrease: () => void;
-  onRemove: () => void;
-};
-
-const CartRow = ({ item, onIncrease, onDecrease, onRemove }: CartRowProps) => {
-  const price = Number(item.price);
-
-  return (
-    <div className="cart-row">
-      <div className="cart-product">
-        <img src={item.image} alt={item.title} />
-        <div>
-          <h4>{item.title}</h4>
-          <p className="gray">Color : {item.color}</p>
-          <button className="cart-remove" onClick={onRemove}>
-            Remove
-          </button>
-        </div>
-      </div>
-
-      <span>{formatPrice(price)}</span>
-
-      <div className="cart-qty">
-        <button onClick={onDecrease} aria-label="Decrease quantity">
-          -
-        </button>
-        <span>{String(item.qty).padStart(2, "0")}</span>
-        <button onClick={onIncrease} aria-label="Increase quantity">
-          +
-        </button>
-      </div>
-
-      <span className="right">{formatPrice(price * item.qty)}</span>
-    </div>
-  );
-};
-
 const ShopCart = () => {
-  const [items, setItems] = useState<CartItem[]>(getCartFromStorage);
-  const [isWrapped, setIsWrapped] = useState<boolean>(false);
+  const [items, setItems] = useState<CartItem[]>(
+    JSON.parse(localStorage.getItem("cart") || "[]")
+  );
+  const [wrapped, setWrapped] = useState(false);
 
-  // items dəyişəndə localStorage avtomatik yenilənir
+  // items dəyişəndə localStorage yenilənir
   useEffect(() => {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    localStorage.setItem("cart", JSON.stringify(items));
   }, [items]);
 
-  const changeQty = (id: number, step: number) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, qty: Math.max(1, item.qty + step) } : item
-      )
-    );
+  const plus = (index: number) => {
+    const newItems = [...items];
+    newItems[index].qty = newItems[index].qty + 1;
+    setItems(newItems);
   };
 
-  const removeItem = (id: number) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleCheckout = () => {
-    if (items.length === 0) {
-      alert("Your cart is empty");
-      return;
+  const minus = (index: number) => {
+    const newItems = [...items];
+    if (newItems[index].qty > 1) {
+      newItems[index].qty = newItems[index].qty - 1;
     }
+    setItems(newItems);
+  };
+
+  const removeItem = (index: number) => {
+    setItems(items.filter((_, i) => i !== index));
+  };
+
+  const checkout = () => {
     alert("Thank you for your order!");
     setItems([]);
-    setIsWrapped(false);
+    setWrapped(false);
   };
 
-  const subtotal = useMemo(() => {
-    const itemsTotal = items.reduce(
-      (sum, item) => sum + Number(item.price) * item.qty,
-      0
-    );
-    return isWrapped && items.length > 0 ? itemsTotal + WRAP_PRICE : itemsTotal;
-  }, [items, isWrapped]);
+  let subtotal = 0;
+  items.forEach((item) => {
+    subtotal = subtotal + item.price * item.qty;
+  });
+
+  if (wrapped && items.length > 0) {
+    subtotal = subtotal + 10;
+  }
 
   return (
     <section className="cart">
@@ -118,32 +69,50 @@ const ShopCart = () => {
 
       {items.length === 0 && <p>Your cart is empty</p>}
 
-      {items.map((item) => (
-        <CartRow
-          key={item.id}
-          item={item}
-          onIncrease={() => changeQty(item.id, 1)}
-          onDecrease={() => changeQty(item.id, -1)}
-          onRemove={() => removeItem(item.id)}
-        />
+      {items.map((item, index) => (
+        <div className="cart-row" key={index}>
+          <div className="cart-product">
+            <img src={item.image} alt={item.title} />
+            <div>
+              <h4>{item.title}</h4>
+              <p className="gray">Size : {item.size}</p>
+              <p className="gray">
+                Color : <span className="cart-color" style={{ background: item.color }}></span>
+              </p>
+              <button className="cart-remove" onClick={() => removeItem(index)}>
+                Remove
+              </button>
+            </div>
+          </div>
+
+          <span>${item.price.toFixed(2)}</span>
+
+          <div className="cart-qty">
+            <button onClick={() => minus(index)}>-</button>
+            <span>{item.qty}</span>
+            <button onClick={() => plus(index)}>+</button>
+          </div>
+
+          <span className="right">${(item.price * item.qty).toFixed(2)}</span>
+        </div>
       ))}
 
       <div className="cart-bottom">
         <label className="cart-wrap">
           <input
             type="checkbox"
-            checked={isWrapped}
-            onChange={(e) => setIsWrapped(e.target.checked)}
+            checked={wrapped}
+            onChange={(e) => setWrapped(e.target.checked)}
           />{" "}
-          For {formatPrice(WRAP_PRICE)} Please Wrap The Product
+          For $10.00 Please Wrap The Product
         </label>
 
         <div className="cart-sub">
           <span>Subtotal</span>
-          <span>{formatPrice(subtotal)}</span>
+          <span>${subtotal.toFixed(2)}</span>
         </div>
 
-        <button className="cart-checkout" onClick={handleCheckout}>
+        <button className="cart-checkout" onClick={checkout}>
           Checkout
         </button>
         <button className="cart-view" onClick={() => window.scrollTo(0, 0)}>

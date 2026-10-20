@@ -56,6 +56,15 @@
   font-size: 14px;
 }
 
+/* rəng dairəsi */
+.cart-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
 .cart-remove {
   background: none;
   border: none;
@@ -140,12 +149,14 @@
 
   /* sətir: məhsul yuxarıda, qiymət / say / cəm aşağıda */
   .cart-row {
-    grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
   }
 
   .cart-product {
-    grid-column: 1 / -1;
+    width: 100%;
   }
 
   .cart-bottom {

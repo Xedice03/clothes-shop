@@ -1,4 +1,3 @@
-
 .header {
   padding: 16px 0;
   background: #fff;
@@ -55,16 +54,51 @@
   gap: 20px;
 }
 
-.icons a {
+.icons a,
+.icons button {
   color: #6c757d;
 }
 
-.icons a:hover {
+.icons a:hover,
+.icons button:hover {
   color: #000;
 }
 
 .icons svg {
   font-size: 20px;
+}
+
+/* search ikonu düymədir, ona görə düymə üslubunu silirik */
+.search-btn {
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* axtarış sətri */
+.search-form {
+  display: flex;
+  gap: 10px;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 16px 16px 0;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.search-form button {
+  padding: 8px 24px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* hamburger: masaüstündə gizlidir */

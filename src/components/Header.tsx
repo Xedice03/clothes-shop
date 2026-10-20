@@ -1,14 +1,33 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsSearch, BsPerson, BsBag, BsList } from "react-icons/bs";
 import "./Header.css";
 
 function Header() {
+  const navigate = useNavigate();
+
   // menyu açıqdır (true), ya bağlı (false)
   const [open, setOpen] = useState(false);
 
+  // axtarış açıqdır, ya bağlı
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
   // keçidə basanda menyu bağlansın
   const close = () => setOpen(false);
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (searchText.trim() === "") {
+      return;
+    }
+
+    navigate("/shop?search=" + searchText.trim());
+    setShowSearch(false);
+    setSearchText("");
+    close();
+  };
 
   return (
     <header className="header">
@@ -39,12 +58,28 @@ function Header() {
 
           {/* ikonlar */}
           <div className="icons">
-            <Link to="/search" onClick={close}><BsSearch /></Link>
+            <button className="search-btn" type="button" onClick={() => setShowSearch(!showSearch)}>
+              <BsSearch />
+            </button>
             <Link to="/account" onClick={close}><BsPerson /></Link>
             <Link to="/cart" onClick={close}><BsBag /></Link>
           </div>
         </div>
       </div>
+
+      {/* axtarış */}
+      {showSearch && (
+        <form className="search-form" onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            autoFocus
+          />
+          <button type="submit">Search</button>
+        </form>
+      )}
     </header>
   );
 }
